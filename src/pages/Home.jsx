@@ -1,4 +1,5 @@
 import AlertButton from "./AlertButton";
+import ListSiswa from "./ListSiswa";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         text="klik disini"
         message="kosong *pencet lagi deh mendingan"
       />
+      <ListSiswa />
     </section>
   );
 }

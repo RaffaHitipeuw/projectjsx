@@ -4,30 +4,38 @@ export default function Note({ note, onChange, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   let component;
 
+  function handleChangeTitle(e) {
+    onChange({ ...note, title: e.target.value });
+  }
+
   function handleChangeText(e) {
-    const newNote = { ...note, text: e.target.value };
-    onChange(newNote);
+    onChange({ ...note, text: e.target.value });
+  }
+
+  function handleChangeHARD(e) {
+    onChange({ ...note, HARD: e.target.value });
   }
 
   if (isEditing) {
     component = (
       <>
+        <input value={note.title} onChange={handleChangeTitle} />
         <input value={note.text} onChange={handleChangeText} />
+        <input value={note.HARD} onChange={handleChangeHARD} />
         <button onClick={() => setIsEditing(false)}>Save</button>
       </>
     );
   } else {
     component = (
       <>
-        {note.text}
+        <div>{note.title} {note.text} {note.HARD}</div>
         <button onClick={() => setIsEditing(true)}>Edit</button>
       </>
     );
   }
 
   function handleChangeDone(e) {
-    const newNote = { ...note, done: e.target.checked };
-    onChange(newNote);
+    onChange({ ...note, done: e.target.checked });
   }
 
   return (

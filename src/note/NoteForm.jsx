@@ -1,79 +1,47 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function NoteForm({
-  dispatch,
-  editingId,
-  students,
-}) {
+export default function NoteForm({ dispatch }) {
   const [form, setForm] = useState({
-    nama: "",
-    umur: "",
-    kelas: "",
+    text: "",
+    name: "",
+    Kelas: "",
   });
-
-  useEffect(() => {
-    if (editingId) {
-      const student = students.find(
-        (s) => s.id === editingId
-      );
-      if (student) {
-        setForm(student);
-      }
-    }
-  }, [editingId, students]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!form.nama || !form.umur || !form.kelas) return;
+    if (!form.text || !form.name || !form.Kelas) return;
 
     dispatch({
-      type: editingId ? "EDIT_DATA" : "ADD_DATA",
-      payload: editingId
-        ? { id: editingId, ...form }
-        : { id: Date.now(), ...form },
+      type: "ADD_NOTE",
+      payload: form,
     });
 
-    setForm({ nama: "", umur: "", kelas: "" });
+    setForm({ text: "", name: "", Kelas: "" });
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex gap-2 mb-6"
-    >
+    <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
       <input
         className="border rounded px-3 py-2 w-full"
-        placeholder="Nama"
-        value={form.nama}
-        onChange={(e) =>
-          setForm({ ...form, nama: e.target.value })
-        }
+        placeholder="Note"
+        value={form.text}
+        onChange={e => setForm({ ...form, text: e.target.value })}
+      />
+      <input
+        className="border rounded px-3 py-2 w-32"
+        placeholder="Name"
+        value={form.name}
+        onChange={e => setForm({ ...form, name: e.target.value })}
       />
       <input
         type="number"
         className="border rounded px-3 py-2 w-24"
-        placeholder="Umur"
-        value={form.umur}
-        onChange={(e) =>
-          setForm({ ...form, umur: e.target.value })
-        }
-      />
-      <input
-        className="border rounded px-3 py-2 w-28"
         placeholder="Kelas"
-        value={form.kelas}
-        onChange={(e) =>
-          setForm({ ...form, kelas: e.target.value })
-        }
+        value={form.Kelas}
+        onChange={e => setForm({ ...form, Kelas: e.target.value })}
       />
-      <button
-        className={`px-4 py-2 rounded text-white ${
-          editingId
-            ? "bg-gray-300 hover:bg-gray-600"
-            : "bg-gray-300 hover:bg-gray-600"
-        }`}
-      >
-        {editingId ? "Update" : "Tambah"}
+      <button className="px-4 py-2 rounded text-white bg-gray-300 hover:bg-gray-600">
+        Add
       </button>
     </form>
   );

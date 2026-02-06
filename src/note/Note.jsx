@@ -12,7 +12,7 @@ export default function Note({ note, onChange, onDelete }) {
     onChange({ ...note, text: e.target.value });
   }
 
-  function handleChangeHARD(e) {
+k  function handleChangeHARD(e) {
     onChange({ ...note, HARD: e.target.value });
   }
 
